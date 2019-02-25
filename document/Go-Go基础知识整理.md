@@ -1,4 +1,4 @@
-记录 Go 语言的基础知识和 Java 中的异同点
+整理下 Go 语言的基础知识和 Java 中的异同点, 主要参考: [https://github.com/astaxie/build-web-application-with-golang](https://github.com/astaxie/build-web-application-with-golang)
 
 # 语言特性
 
@@ -178,7 +178,7 @@ Go 语言提供的条件语句除了和 Java 中提供的 if else 常见的条�
 # 循环语句
 
 * `for init; condition; post {}`: 普通 for 循环语句
-* `for condition {}`: 类似 while 语句, 如 `for true {}`
+* `for condition {}`: 如实现 while true 效果一样的语句 `for true {}`
 * `for {}`: 死循环语句, 等价于 Java 中的 for(;;)
 
 # 函数定义和返回多个值
@@ -216,3 +216,58 @@ func main() {
 参考资料:
 
 * [Golang 函数闭包的理解](https://blog.csdn.net/netdxy/article/details/72054431)
+
+# 切片和切片定义
+
+Go 数组长度不可变, 因此 Go 提供了一种内置的类型 slice 类型, 切片, 可以认为是一个动态数组, 可以追加元素, 和 Java 的 Map 一样会有扩容机制, 下例包含切片的定义, append, copy 方法
+
+```go
+package main
+
+import (
+	"fmt"
+	"strconv"
+)
+
+func main() {
+	fmt.Println("Hello World")
+
+	// 1. 数组方式
+	// 定义未初始化的数组创建
+	var slice1 []string
+	if slice1 == nil {
+		fmt.Println("切片为空, len = " + strconv.Itoa(len(slice1)) + ", cap = " + strconv.Itoa(cap(slice1)))
+	}
+
+	// 数组初始化的时候创建, 这种方式创建时 `初始化元素的数量 = len = capacity`
+	var slice2 = [] string {"0", "1", "2"}
+	fmt.Println(slice2)
+
+	// 通过子数组创建, 关于 array[startIndex:endIndex], 得到一个子数组
+	// startIndex 和 endIndex 可以缺省
+	// array[:] 包含全部元素的数组
+	// array[startIndex:] 包含下标 startIndex 开始到最后一个元素的数组
+	// array[:endIndex] 包含第一个元素到下标为 endIndex 的数组
+	var array = [6] string {"0", "1", "2", "3", "4", "5"}
+	var slice3 = array[0:3];
+	fmt.Println(slice3)
+
+	// 2. 使用 make([]T, length, capacity) 方法创建
+	var slice4 = make([]string, 3)
+	slice4[0] = "0"
+	slice4[1] = "1"
+	slice4[2] = "2"
+	fmt.Println(slice4)
+
+	// 3. append 方法追加元素, 如果 cap 值不够则会扩容
+	fmt.Println("添加元素前, len = " + strconv.Itoa(len(slice4)) + ", cap = " + strconv.Itoa(cap(slice4)))
+	slice4 = append(slice4, "3")
+	fmt.Println(slice4)
+	fmt.Println("添加元素后, len = " + strconv.Itoa(len(slice4)) + ", cap = " + strconv.Itoa(cap(slice4)))
+
+	// 4. copy(dst []T, src []T), 将切片 src 复制到切片 dst, 但是要保证 dst 切片的 cap 不能小于 src 切片的 cap
+	slice5 := make([]string, len(slice4), cap(slice4) * 2)
+	copy(slice5, slice4)
+	fmt.Println(slice5)
+}
+```
