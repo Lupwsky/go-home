@@ -333,12 +333,20 @@ for key, value := range currentMap{
 
 ```go
 package main
-import "fmt"
+import (
+    "fmt"
+    "strconv"
+)
 
 func main() {
 	a := 2
-	b := string(a)
+	// int 转 float32
+	b := float32(a)
 	fmt.Println(b)
+
+	// 注意 string() 格式化, b := string(a) 并不能转成字符串的 2
+	// 使用 strconv.Itoa(a) 方法转
+	strconv.Itoa(a)
 }
 ```
 
