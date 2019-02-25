@@ -60,7 +60,7 @@ Go 语言中一行代表一个语句, 和 Java 不同, 不需要在末尾添加�
 
 ## 派生类型
 
-包括指针类型 (Pointer), 数组类型, 接口类型, 切片类型(slice), Channel 类型, 函数类型, Map, 范围类型 (Range) 等
+包括指针类型 (Pointer), 数组类型, 接口类型, 切片类型(slice), Channel 类型, 函数类型, Map 等
 
 # 变量声明
 
@@ -271,3 +271,74 @@ func main() {
 	fmt.Println(slice5)
 }
 ```
+
+# 集合 Map
+
+map 声明格式: `var 变量名 map[key类型]value类型`, 声明并赋值格式: `var 变量名 = map[key类型]value类型{值列表}`
+
+```go
+package main
+import "fmt"
+
+func main() {
+	var currentMap = make(map[string]string);
+	currentMap["A"] = "A"
+	currentMap["B"] = "B"
+	currentMap["C"] = "C"
+
+	// 遍历值
+	for value := range currentMap {
+		fmt.Println(value)
+	}
+
+	// 遍历键和值
+	for key, value := range currentMap{
+		fmt.Println("key = " + key + ", value = " + value);
+	}
+
+	// 获取值
+	svalue := currentMap["A"]
+	fmt.Println(svalue)
+
+	// 获取值和判断值是否存在
+	value, exist := currentMap["A"]
+	if exist {
+		fmt.Println(value)
+	}
+
+	// 删除键值对, 有就删除, 没有不做任何操作
+	delete(currentMap, "A")
+}
+```
+
+# 关键字 Range
+
+range 关键字用于 for 循环中迭代数组(array), 切片(slice), 通道(channel)或集合(map)的元素, 在数组和切片中它返回元素的索引和索引对应的值, 在集合中返回 key-value 对的 key 值(或者只返回 value)
+
+```go
+// 遍历值
+for value := range currentMap {
+    fmt.Println(value)
+}
+
+// 遍历键和值
+for key, value := range currentMap{
+    fmt.Println("key = " + key + ", value = " + value);
+}
+```
+
+# 语言类型转换
+
+转换格式: `类型(变量, 其他类型的值或表达式)`
+
+```go
+package main
+import "fmt"
+
+func main() {
+	a := 2
+	b := string(a)
+	fmt.Println(b)
+}
+```
+
