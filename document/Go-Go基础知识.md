@@ -216,7 +216,3 @@ func main() {
 参考资料:
 
 * [Golang 函数闭包的理解](https://blog.csdn.net/netdxy/article/details/72054431)
-
-# 结构体
-
-Go 语言中的结构体和 C 语言中的结构体是一样的, 对应着 Java 中的类
